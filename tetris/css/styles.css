@@ -1,0 +1,155 @@
+/* General styling */
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  background: #222;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  margin: 10px 0;
+}
+
+/* Main container for game and right panel */
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align the game board and panel at the top */
+  gap: 20px; /* Space between the game and right panel */
+}
+
+/* Game container styling */
+.game-container {
+  display: flex;
+  justify-content: center;
+}
+
+/* Game board styling */
+#game-board {
+  display: grid;
+  grid-template-columns: repeat(10, 30px); /* 10 columns */
+  grid-template-rows: repeat(20, 30px);   /* 20 rows */
+  gap: 1px;
+  background-color: #333;
+  border: 2px solid #555;
+  /* Remove fixed width and height */
+  max-width: 320px; /* 10 columns * 30px + gap */
+  max-height: 620px; /* 20 rows * 30px + gap */
+}
+
+/* Individual grid cells */
+.cell {
+  width: 30px;
+  height: 30px;
+  background-color: #444;
+  box-sizing: border-box;
+  border: 1px solid #555;
+}
+
+/* Tetromino colors */
+.tetromino {
+  background-color: #f00; /* Default color */
+}
+
+.tetromino-o {
+  background-color: yellow;
+}
+
+.tetromino-i {
+  background-color: cyan;
+}
+
+.tetromino-t {
+  background-color: purple;
+}
+
+.tetromino-s {
+  background-color: green;
+}
+
+.tetromino-z {
+  background-color: red;
+}
+
+.tetromino-j {
+  background-color: darkblue;
+}
+
+.tetromino-l {
+  background-color: orange;
+}
+
+/* Right panel for next piece, instructions, and score */
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px; /* Space between sections */
+}
+
+/* Next piece container */
+.next-piece-container {
+  text-align: center;
+}
+
+#next-piece {
+  display: grid;
+  grid-template-columns: repeat(4, 30px); /* Smaller grid for preview (4x4) */
+  grid-template-rows: repeat(4, 30px);
+  gap: 1px;
+  background-color: #333;
+  border: 2px solid #555;
+  max-width: 130px; /* 4 columns * 30px + gap */
+  max-height: 130px; /* 4 rows * 30px + gap */
+}
+
+.next-piece-cell {
+  width: 30px;
+  height: 30px;
+  background-color: #444;
+  box-sizing: border-box;
+  border: 1px solid #555;
+}
+
+/* Instructions styling */
+.instructions {
+  text-align: center;
+  color: #aaa;
+}
+
+/* Score container */
+.score-container {
+  text-align: center;
+}
+
+/* Game over screen */
+.game-over {
+  display: none; /* Initially hidden */
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 20px;
+  border: 2px solid #555;
+  border-radius: 10px;
+}
+
+#restart-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #0f0;
+  color: #222;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#restart-button:hover {
+  background-color: #0c0;
+}
