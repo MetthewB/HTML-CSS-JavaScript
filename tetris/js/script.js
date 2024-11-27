@@ -102,21 +102,24 @@ function getRandomTetrominoType() {
 // Draw the tetromino
 const cells = Array.from(document.querySelectorAll('.cell'));
 
+let currentTetrominoIndices = [];
+
+// Draw the tetromino
 function drawTetromino() {
-   console.log('Drawing tetromino at position:', currentPosition);
-   const translatedIndices = translateToMainGrid(currentTetromino, currentPosition);
-   translatedIndices.forEach(index => {
-       console.log(`Drawing index: ${index}`); // Log the index
-       cells[index].classList.add('tetromino', `tetromino-${currentTetrominoType.toLowerCase()}`);
-   });
+  console.log('Drawing tetromino at position:', currentPosition);
+  currentTetrominoIndices = translateToMainGrid(currentTetromino, currentPosition);
+  currentTetrominoIndices.forEach(index => {
+    console.log(`Drawing index: ${index}`); // Log the index
+    cells[index].classList.add('tetromino', `tetromino-${currentTetrominoType.toLowerCase()}`);
+  });
 }
 
 function undrawTetromino() {
-   const translatedIndices = translateToMainGrid(currentTetromino, currentPosition);
-   translatedIndices.forEach(index => {
-       cells[index].classList.remove('tetromino', `tetromino-${currentTetrominoType.toLowerCase()}`);
-   });
+  currentTetrominoIndices.forEach(index => {
+    cells[index].classList.remove('tetromino', `tetromino-${currentTetrominoType.toLowerCase()}`);
+  });
 }
+
 // Check if the tetromino can move down
 function canMoveDown() {
   const translatedIndices = translateToMainGrid(currentTetromino, currentPosition);
@@ -143,22 +146,7 @@ function fixTetromino() {
   drawTetromino();
 }
 
-// Check and remove completed lines
-function checkCompletedLines() {
-  for (let row = 0; row < 20; row++) {
-    const isComplete = Array.from({ length: 10 }, (_, col) => row * 10 + col)
-      .every(index => cells[index].classList.contains('fixed'));
-    if (isComplete) {
-      Array.from({ length: 10 }, (_, col) => row * 10 + col)
-        .forEach(index => cells[index].classList.remove('fixed', 'tetromino', `tetromino-${currentTetrominoType.toLowerCase()}`));
-      const fixedCells = Array.from(document.querySelectorAll('.fixed'));
-      fixedCells.forEach(cell => cell.classList.remove('fixed', 'tetromino', `tetromino-${currentTetrominoType.toLowerCase()}`));
-      fixedCells.forEach(cell => gameBoard.appendChild(cell));
-    }
-  }
-}
-
-// Move the tetromino
+// Move the tetromino down
 function moveDown() {
   if (canMoveDown()) {
     undrawTetromino();
@@ -169,9 +157,9 @@ function moveDown() {
   }
 }
 
+// Move the tetromino left
 function moveLeft() {
-  const translatedIndices = translateToMainGrid(currentTetromino, currentPosition);
-  const canMoveLeft = translatedIndices.every(index => {
+  const canMoveLeft = currentTetrominoIndices.every(index => {
     const col = index % 10;
     return col > 0 && !cells[index - 1].classList.contains('fixed');
   });
@@ -183,9 +171,9 @@ function moveLeft() {
   }
 }
 
+// Move the tetromino right
 function moveRight() {
-  const translatedIndices = translateToMainGrid(currentTetromino, currentPosition);
-  const canMoveRight = translatedIndices.every(index => {
+  const canMoveRight = currentTetrominoIndices.every(index => {
     const col = index % 10;
     return col < 9 && !cells[index + 1].classList.contains('fixed');
   });
@@ -222,7 +210,7 @@ function checkCompletedLines() {
       // Remove the completed line
       Array.from({ length: 10 }, (_, col) => row * 10 + col)
         .forEach(index => {
-          cells[index].classList.remove('fixed', 'tetromino', `tetromino-${currentTetrominoType.toLowerCase()}`);
+          cells[index].className = 'cell'; // Reset the cell
         });
       
       // Move all cells above the cleared line down by one row
@@ -264,12 +252,37 @@ function gameOver() {
 
 let currentTetrominoType = 'L'; // Track the current tetromino type
 
+// Function to check and adjust overflow
+function adjustOverflow(translatedIndices, originalIndices) {
+  const originalEndsWith = originalIndices.map(index => index % 10);
+  const translatedEndsWith = translatedIndices.map(index => index % 10);
+
+  // Check if any index ends with a digit from 6 to 9 and after rotation ends with a digit from 0 to 3
+  if (originalEndsWith.some(digit => digit >= 6 && digit <= 9) && translatedEndsWith.some(digit => digit >= 0 && digit <= 3)) {
+    while (translatedIndices.some(index => index % 10 >= 0 && index % 10 <= 3)) {
+      translatedIndices = translatedIndices.map(index => index - 1);
+      currentPosition -= 1; // Adjust the current position accordingly
+    }
+  }
+
+  // Check if any index ends with a digit from 0 to 3 and after rotation ends with a digit from 6 to 9
+  if (originalEndsWith.some(digit => digit >= 0 && digit <= 3) && translatedEndsWith.some(digit => digit >= 6 && digit <= 9)) {
+    while (translatedIndices.some(index => index % 10 >= 6 && index % 10 <= 9)) {
+      translatedIndices = translatedIndices.map(index => index + 1);
+      currentPosition += 1; // Adjust the current position accordingly
+    }
+  }
+
+  return translatedIndices;
+}
+
 // Rotate the tetromino
 function rotateTetromino(direction) {
-  console.log('Rotating tetromino:', direction);
   undrawTetromino();
-  currentRotation = (currentRotation + direction + 4) % 4; // Ensure rotation stays within 0-3
+  const originalIndices = translateToMainGrid(currentTetromino, currentPosition);
+  currentRotation = (currentRotation + direction + 4) % 4;
   currentTetromino = tetrominoes[currentTetrominoType][currentRotation];
+  currentTetrominoIndices = adjustOverflow(translateToMainGrid(currentTetromino, currentPosition), originalIndices);
   drawTetromino();
 }
 
