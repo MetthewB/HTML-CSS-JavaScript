@@ -1,9 +1,0 @@
-DenoiserType,Parameter,PSNR (dB),SI-PSNR (dB),SSIM,Runtime (s),RAM Usage (MB)
-Gaussian,sigma = 2.5,23.96,35.92,0.828,0.0078,3.35
-Median,size = 5,23.96,35.92,0.828,0.0078,3.35
-TV-Chambolle,weight = 0.1,23.96,35.92,0.828,0.0078,3.35
-TV-ISO,lambda = 2.5,23.96,35.92,0.828,0.0078,3.35
-Wavelet,None = 2.5,23.96,35.92,0.828,0.0078,3.35
-NL-Means,None = 2.5,23.96,35.92,0.828,0.0078,3.35
-Noise2Void,...,23.96,35.92,0.828,0.0078,3.35
-Noise2Noise,...,23.96,35.92,0.828,0.0078,3.35
