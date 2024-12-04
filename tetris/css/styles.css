@@ -96,7 +96,6 @@ h1 {
 /* Next piece container */
 .next-piece-container {
   text-align: center;
-  margin-bottom: 20px; /* Add margin to separate from the stored piece grid */
 }
 
 #next-piece {
@@ -146,48 +145,9 @@ h1 {
   background-color: orange;
 }
 
-/* Instructions styling */
-.instructions {
-  text-align: center;
-  color: #aaa;
-}
-
-/* Score container */
-.score-container {
-  text-align: center;
-}
-
-/* Game over screen */
-.game-over {
-  display: none; /* Initially hidden */
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  padding: 20px;
-  border: 2px solid #555;
-  border-radius: 10px;
-}
-
-#restart-button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #0f0;
-  color: #222;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#restart-button:hover {
-  background-color: #0c0;
-}
-
-
 /* Stored piece container */
 .stored-piece-container {
   text-align: center;
-  margin-top: 20px;
 }
 
 #stored-piece {
@@ -235,4 +195,41 @@ h1 {
 
 .stored-piece-cell.filled.tetromino-l {
   background-color: orange;
+}
+
+/* Instructions styling */
+.instructions {
+  text-align: center;
+  color: #aaa;
+}
+
+/* Score container */
+.score-container {
+  text-align: center;
+}
+
+/* Game over screen */
+.game-over {
+  display: none; /* Initially hidden */
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 20px;
+  border: 2px solid #555;
+  border-radius: 10px;
+}
+
+#restart-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #0f0;
+  color: #222;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#restart-button:hover {
+  background-color: #0c0;
 }

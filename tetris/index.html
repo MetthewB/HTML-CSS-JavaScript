@@ -1,21 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tetris</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tetris Game</title>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <h1>Tetris</h1>
   <div class="main-container">
-    <!-- Game Board Container -->
-    <div class="game-container">
-      <div id="game-board"></div>
-    </div>
-    
-    <!-- Right Panel for Next Piece, Instructions, and Score -->
+    <div id="game-board"></div>
     <div class="right-panel">
       <div class="instructions">
         <p>Use Arrow Keys to Move</p>
@@ -24,7 +17,9 @@
       <div class="next-piece-container">
         <p>Next Piece:</p>
         <div id="next-piece"></div>
+      </div>
       <div id="stored-piece-container" class="stored-piece-container">
+        <p>Stored Piece:</p>
         <div id="stored-piece"></div>
       </div>
       <div class="score-container">
@@ -32,16 +27,13 @@
       </div>
     </div>
   </div>
-  
-  <!-- Game Over Screen -->
   <div class="game-over">
     <h2>Game Over</h2>
     <p>Your Score: <span id="final-score">0</span></p>
     <button id="restart-button">Restart</button>
   </div>
 
-    <!-- Include JavaScript files in the correct order -->
-    <script src="script.js"></script>
-  </body>
-  </html>
+  <!-- Include JavaScript files -->
+  <script src="js/script.js"></script>
+</body>
 </html>

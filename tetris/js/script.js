@@ -112,6 +112,22 @@ function translateToNextGrid(indices) {
   });
 }
 
+// Update the next piece grid
+function updateNextPieceGrid(nextTetrominoType) {
+  // Clear the grid
+  nextCells.forEach(cell => {
+    cell.classList.remove('filled', 'tetromino-o', 'tetromino-i', 'tetromino-t', 'tetromino-s', 'tetromino-z', 'tetromino-j', 'tetromino-l');
+  });
+
+  // Get the initial orientation of the next tetromino
+  const initialOrientation = tetrominoes[nextTetrominoType][0];
+
+  // Fill the grid with the next tetromino
+  initialOrientation.forEach(index => {
+    nextCells[index].classList.add('filled', `tetromino-${nextTetrominoType.toLowerCase()}`);
+  });
+}
+
 // Show the next piece
 function showNextPiece(nextTetromino) {
   nextCells.forEach(cell => cell.classList.remove('tetromino')); // Clear the preview
@@ -334,7 +350,7 @@ function adjustOverflow(translatedIndices, originalIndices) {
   // Check if any index ends with a digit from 6 to 9 and after rotation ends with a digit from 0 to 3
   if (originalEndsWith.some(digit => digit >= 6 && digit <= 9) && translatedEndsWith.some(digit => digit >= 0 && digit <= 3)) {
     while (translatedIndices.some(index => index % 10 >= 0 && index % 10 <= 3)) {
-      translatedIndices = translatedIndices.map(index => index - 1);
+      translatedIndices = translatedIndices.map(index - 1);
       currentPosition -= 1; // Adjust the current position accordingly
     }
   }
@@ -342,7 +358,7 @@ function adjustOverflow(translatedIndices, originalIndices) {
   // Check if any index ends with a digit from 0 to 3 and after rotation ends with a digit from 6 to 9
   if (originalEndsWith.some(digit => digit >= 0 && digit <= 3) && translatedEndsWith.some(digit => digit >= 6 &&  digit <= 9)) {
     while (translatedIndices.some(index => index % 10 >= 6 && index % 10 <= 9)) {
-      translatedIndices = translatedIndices.map(index => index + 1);
+      translatedIndices = translatedIndices.map(index + 1);
       currentPosition += 1; // Adjust the current position accordingly
     }
   }
@@ -388,19 +404,3 @@ restartButton.addEventListener('click', () => {
 
 // Start the game when the window loads
 window.onload = startGame;
-
-// Update the next piece grid
-function updateNextPieceGrid(nextTetrominoType) {
-  // Clear the grid
-  nextCells.forEach(cell => {
-    cell.classList.remove('filled', 'tetromino-o', 'tetromino-i', 'tetromino-t', 'tetromino-s', 'tetromino-z', 'tetromino-j', 'tetromino-l');
-  });
-
-  // Get the initial orientation of the next tetromino
-  const initialOrientation = tetrominoes[nextTetrominoType][0];
-
-  // Fill the grid with the next tetromino
-  initialOrientation.forEach(index => {
-    nextCells[index].classList.add('filled', `tetromino-${nextTetrominoType.toLowerCase()}`);
-  });
-}
